@@ -1,9 +1,9 @@
-﻿cmake_minimum_required (VERSION "3.10")
+﻿cmake_minimum_required (VERSION "3.13")
 
 project("phun")
 
-add_executable(phun
-	"src/main.cpp"
-)
+file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
+
+add_executable(phun "${MY_SOURCES}")
 
 target_include_directories(phun PRIVATE "include")
