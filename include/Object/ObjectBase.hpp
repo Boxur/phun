@@ -8,7 +8,6 @@ namespace phun
 	{
 	public:
 		friend class ObjectManager;
-
 	public:
 		ObjectBase();
 	protected:

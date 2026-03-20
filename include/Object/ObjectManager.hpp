@@ -3,6 +3,7 @@
 #include <mutex>
 #include <vector>
 #include <memory>
+#include <any>
 
 namespace phun
 {
@@ -11,10 +12,11 @@ namespace phun
 	public:
 		static ObjectManager& instance();
 
-		ObjectBase& RegisterObject(std::unique_ptr<ObjectBase> obj);
+		ObjectBase& RegisterObject(std::unique_ptr<ObjectBase> obj,std::any value);
 
 		void remove(ObjectBase& obj);
 
+		std::any& getValue(ObjectBase& obj);
 
 	private:
 		ObjectManager() {}
@@ -25,5 +27,6 @@ namespace phun
 		std::vector<size_t>					objectIndexes_;
 		std::vector<size_t>							  ids_;
 		std::vector<std::unique_ptr<ObjectBase>>  objects_;
+		std::vector<std::any>					   values_;
 	};
 }
