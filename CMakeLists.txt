@@ -10,6 +10,11 @@ file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/
 add_library(object STATIC "${OBJECT_LIB}")
 target_include_directories(object PRIVATE "include/Object")
 
+file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/Math/*.cpp")
+
+add_library(math STATIC "${MATH_LIB}")
+target_include_directories(math PRIVATE "include/Math")
+
 add_executable(exec src/main.cpp)
-target_include_directories(exec PRIVATE "include/Object")
-target_link_libraries(exec object)
+target_include_directories(exec PRIVATE "include/Object" "include/Math")
+target_link_libraries(exec object math)
