@@ -22,12 +22,6 @@ namespace phun
 		return *objects_.back();
 	}
 
-	/*ObjectBase& ObjectManager::get(int id)
-	{
-		std::lock_guard<std::mutex> lock(mutex_);
-		return objects_[objectIndexes_[id]];
-	}*/
-
 	void ObjectManager::remove(ObjectBase& obj)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
