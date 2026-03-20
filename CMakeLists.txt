@@ -5,9 +5,11 @@ set(CMAKE_CXX_STANDARD			 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS		OFF)
 
-add_library(phun STATIC src/ObjectBase.cpp src/ObjectManager.cpp)
-target_include_directories(phun PRIVATE "include")
+file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/Object/*.cpp")
+
+add_library(phun STATIC "${OBJECT_LIB}")
+target_include_directories(phun PRIVATE "include/Object")
 
 add_executable(exec src/main.cpp)
-target_include_directories(exec PRIVATE "include")
+target_include_directories(exec PRIVATE "include/Object")
 target_link_libraries(exec phun)
