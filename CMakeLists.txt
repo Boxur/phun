@@ -5,7 +5,9 @@ set(CMAKE_CXX_STANDARD			 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS		OFF)
 
-file(GLOB_RECURSE MY_SOURCES CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/*.cpp")
-
-add_executable(phun "${MY_SOURCES}")
+add_library(phun STATIC src/ObjectBase.cpp src/ObjectManager.cpp)
 target_include_directories(phun PRIVATE "include")
+
+add_executable(exec src/main.cpp)
+target_include_directories(exec PRIVATE "include")
+target_link_libraries(exec phun)
