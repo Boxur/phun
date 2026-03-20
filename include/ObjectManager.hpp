@@ -22,8 +22,8 @@ namespace phun
 		ObjectManager& operator=(const ObjectManager&) = delete;
 		std::mutex mutex_;
 
-		std::vector<int>					objectIndexes_;
-		std::vector<int>							  ids_;
+		std::vector<size_t>					objectIndexes_;
+		std::vector<size_t>							  ids_;
 		std::vector<std::unique_ptr<ObjectBase>>  objects_;
 	};
 }

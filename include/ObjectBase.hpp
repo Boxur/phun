@@ -7,9 +7,12 @@ namespace phun
 	class ObjectBase
 	{
 	public:
-		ObjectBase() : id_(-1) {}
 		friend class ObjectManager;
-	private:
-		int id_;
+
+	public:
+		ObjectBase();
+	protected:
+		
+		size_t id_;
 	};
 }

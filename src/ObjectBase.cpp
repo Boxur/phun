@@ -2,5 +2,5 @@
 
 namespace phun
 {
-
+	ObjectBase::ObjectBase() : id_(-1) {}
 }

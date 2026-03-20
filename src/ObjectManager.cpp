@@ -25,10 +25,13 @@ namespace phun
 	void ObjectManager::remove(ObjectBase& obj)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
-		std::swap(ids_[objectIndexes_[obj.id_]], ids_[objects_.size()-1]);
-		std::swap(objects_[objectIndexes_[obj.id_]], objects_[objects_.size()-1]);
-		objectIndexes_[ids_[objects_.size() - 1]] = static_cast<int>(objects_.size() - 1);
-		objectIndexes_[ids_[objectIndexes_[obj.id_]]] = objectIndexes_[obj.id_];
+		if (objectIndexes_[obj.id_] != objects_.size() - 1)
+		{
+			std::swap(ids_[objectIndexes_[obj.id_]], ids_[objects_.size() - 1]);
+			std::swap(objects_[objectIndexes_[obj.id_]], objects_[objects_.size() - 1]);
+			objectIndexes_[ids_[objectIndexes_[obj.id_]]] = objectIndexes_[obj.id_];
+			objectIndexes_[ids_[objects_.size() - 1]] = objects_.size() - 1;
+		}
 		objects_.pop_back();
 		obj.id_=-1;
 	}
