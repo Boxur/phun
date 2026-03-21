@@ -32,6 +32,16 @@ namespace phun
 			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
 		}
 
+		T& operator*()
+		{
+			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+		}
+
+		T* operator->()
+		{
+			return &std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+		}
+
 		Object() = delete;
 		Object(const Object& other)
 		{
