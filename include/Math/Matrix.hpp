@@ -39,6 +39,10 @@ namespace phun
 		static Matrix Inverse(const Matrix& matrix);
 		static void Invert(Matrix& matrix);
 
+		//Teto reference because it sounds similar to "theta" as an angle
+		static Matrix RotationX(float teto);
+		static Matrix RotationY(float teto);
+		static Matrix RotationZ(float teto);
 
 	private:
 		float At_(size_t index) const;

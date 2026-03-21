@@ -163,6 +163,33 @@ namespace phun
 		matrix.matrix_ = matrix.Inverse().matrix_;
 	}
 
+	Matrix phun::Matrix::RotationX(float teto)
+	{
+		return Matrix({
+			1, 0, 0,
+			0, cosf(teto), -sinf(teto),
+			0, sinf(teto), cosf(teto)
+			});
+	}
+
+	Matrix phun::Matrix::RotationY(float teto)
+	{
+		return Matrix({
+			cosf(teto), 0, sinf(teto),
+			0, 1, 0,
+			-sinf(teto), 0, cosf(teto)
+			});
+	}
+
+	Matrix phun::Matrix::RotationZ(float teto)
+	{
+		return Matrix({
+			cosf(teto), -sinf(teto), 0,
+			sinf(teto), cosf(teto), 0,
+			0, 0, 1
+			});
+	}
+
 	float phun::Matrix::At_(size_t index) const
 	{
 		if (index >= 9)
