@@ -1,8 +1,8 @@
 #pragma once
 #include "ObjectBase.hpp"
 #include "ObjectManager.hpp"
-#include "Reference.hpp"
 #include <memory>
+#include <any>
 #include <cstdlib>
 
 namespace phun
@@ -14,23 +14,28 @@ namespace phun
 		static Object<T>& Create(T value)
 		{
 			auto ptr = std::unique_ptr<Object<T>>(new Object<T>(std::move(value)));
-			auto& baseRef = ObjectManager::instance().RegisterObject(std::move(ptr));
+			auto& baseRef = ObjectManager::instance().RegisterObject(std::move(ptr),std::move(value));
 			return static_cast<Object<T>&>(baseRef);
 		}
 
 		Object<T>& operator=(Object<T> other)
 		{
 			decreaseCounter_();
-			reference = other.reference;
+			refCount = other.refCount;
 			increaseCounter_();
 			id_ = other.id_;
 			return *this;
 		}
 
+		T& value()
+		{
+			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+		}
+
 		Object() = delete;
 		Object(const Object& other)
 		{
-			reference = other.reference;
+			refCount = other.refCount;
 			increaseCounter_();
 			id_ = other.id_;
 		}
@@ -43,31 +48,30 @@ namespace phun
 	private:
 		explicit Object(T value)
 		{
-			reference = new Reference<T>();
-			reference->value = value;
-			reference->refCount=0;
+			refCount = new size_t();
+			*refCount=0;
 		}
 
 		void increaseCounter_()
 		{
-			++reference->refCount;
+			++(*refCount);
 		}
 
 		void decreaseCounter_()
 		{
-			--reference->refCount;
-			if (reference->refCount == 0)
+			--(*refCount);
+			if (*refCount == 0)
 				release();
 		}
 
 		void release()
 		{
 			ObjectManager::instance().remove(*this);
-			delete reference;
-			reference = nullptr;
+			delete refCount;
+			refCount = nullptr;
 		}
 
 	public:
-		Reference<T>* reference;
+		size_t* refCount;
 	};
 }
