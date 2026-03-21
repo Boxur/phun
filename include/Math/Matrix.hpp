@@ -23,6 +23,13 @@ namespace phun
 		Matrix& operator*=(const float& scalar);
 		Matrix operator/(const float& scalar)	const;
 		Matrix& operator/=(const float& scalar);
+
+		float determinant() const;
+		float det() const;
+		static float determinant(const Matrix& matrix);
+		static float det(const Matrix& matrix);
+	private:
+		float at_(size_t index) const;
 	private:
 		std::array<float, 9> matrix_;
 	};
