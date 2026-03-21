@@ -112,6 +112,33 @@ namespace phun
 		return matrix.determinant();
 	}
 
+	Matrix Matrix::inverse() const
+	{
+		float d = determinant();
+		if (d == 0)
+			return Matrix({});
+		return Matrix({
+			at_(4) * at_(8) - at_(5) * at_(7),at_(2) * at_(7) - at_(1) * at_(8) , at_(1) * at_(5) - at_(2) * at_(4),
+			at_(5) * at_(6) - at_(3) * at_(8), at_(0) * at_(8) - at_(2) * at_(6), at_(2) * at_(3) - at_(0) * at_(5),
+			at_(3) * at_(7) - at_(4) * at_(6), at_(1) * at_(6) - at_(0) * at_(7), at_(0) * at_(4) - at_(1) * at_(3)
+			}) / d;
+	}
+
+	void phun::Matrix::invert()
+	{
+		matrix_ = inverse().matrix_;
+	}
+
+	Matrix phun::Matrix::inverse(const Matrix& matrix)
+	{
+		return matrix.inverse();
+	}
+
+	void phun::Matrix::invert(Matrix& matrix)
+	{
+		matrix.invert();
+	}
+
 	float phun::Matrix::at_(size_t index) const
 	{
 		if (index >= 9)

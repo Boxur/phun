@@ -28,6 +28,12 @@ namespace phun
 		float det() const;
 		static float determinant(const Matrix& matrix);
 		static float det(const Matrix& matrix);
+
+		Matrix inverse() const;
+		void invert();
+		static Matrix inverse(const Matrix& matrix);
+		static void invert(Matrix& matrix);
+
 	private:
 		float at_(size_t index) const;
 	private:
