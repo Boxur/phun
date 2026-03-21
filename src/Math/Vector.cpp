@@ -5,7 +5,7 @@ namespace phun
 {
 	Vector::Vector(float x, float y, float z) : x_(x), y_(y), z_(z) {}
 
-	Vector::Vector(Vector& other) : x_(other.x_), y_(other.y_), z_(other.z_) {}
+	Vector::Vector(const Vector& other) : x_(other.x_), y_(other.y_), z_(other.z_) {}
 
 	Vector& Vector::operator=(const Vector& other)
 	{
@@ -86,8 +86,11 @@ namespace phun
 	}
 
 	float& Vector::x() { return x_; }
+	float Vector::x() const { return x_; }
 	float& Vector::y() { return y_; }
+	float Vector::y() const { return y_; }
 	float& Vector::z() { return z_; }
+	float Vector::z() const { return z_; }
 
 	Vector operator*(const float& scalar, const Vector& vector)
 	{

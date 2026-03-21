@@ -8,7 +8,7 @@ namespace phun
 	{
 	public:
 		Vector(float x, float y, float z);
-		Vector(Vector& other);
+		Vector(const Vector& other);
 
 		Vector& operator=(const Vector& other);
 		Vector operator+(const Vector& other)	const;
@@ -29,8 +29,11 @@ namespace phun
 		void Normalize();
 
 		float& x();
+		float x() const;
 		float& y();
+		float y() const;
 		float& z();
+		float z() const;
 
 
 	private:
