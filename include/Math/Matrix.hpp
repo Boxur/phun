@@ -29,6 +29,11 @@ namespace phun
 		static float determinant(const Matrix& matrix);
 		static float det(const Matrix& matrix);
 
+		Matrix transposition() const;
+		void transpose();
+		static Matrix transposition(const Matrix& matrix);
+		static void transpose(Matrix& matrix);
+
 		Matrix inverse() const;
 		void invert();
 		static Matrix inverse(const Matrix& matrix);

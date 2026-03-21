@@ -112,6 +112,30 @@ namespace phun
 		return matrix.determinant();
 	}
 
+	Matrix phun::Matrix::transposition() const
+	{
+		return Matrix({
+			at_(0), at_(3), at_(6),
+			at_(1), at_(4), at_(7),
+			at_(2), at_(5), at_(8)
+			});
+	}
+
+	void phun::Matrix::transpose()
+	{
+		matrix_ = transposition().matrix_;
+	}
+
+	Matrix phun::Matrix::transposition(const Matrix& matrix)
+	{
+		return matrix.transposition();
+	}
+
+	void phun::Matrix::transpose(Matrix& matrix)
+	{
+		matrix.matrix_ = matrix.transposition().matrix_;
+	}
+
 	Matrix Matrix::inverse() const
 	{
 		float d = determinant();
@@ -136,7 +160,7 @@ namespace phun
 
 	void phun::Matrix::invert(Matrix& matrix)
 	{
-		matrix.invert();
+		matrix.matrix_ = matrix.inverse().matrix_;
 	}
 
 	float phun::Matrix::at_(size_t index) const
