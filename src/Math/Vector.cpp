@@ -1,19 +1,38 @@
 #include "Vector.hpp"
 
+
 namespace phun
 {
 	Vector::Vector(float x, float y, float z) : x_(x), y_(y), z_(z) {}
 
 	Vector::Vector(Vector& other) : x_(other.x_), y_(other.y_), z_(other.z_) {}
 
+	Vector& Vector::operator=(const Vector& other)
+	{
+		x_ = other.x_;
+		y_ = other.y_;
+		z_ = other.z_;
+		return *this;
+	}
+
 	Vector Vector::operator+(const Vector& other) const
 	{
 		return Vector(x_+other.x_,y_+other.y_,z_+other.z_);
 	}
 
+	Vector& Vector::operator+=(const Vector& other)
+	{
+		return *this=*this+other;
+	}
+
 	Vector Vector::operator-(const Vector& other) const
 	{
 		return Vector(x_ - other.x_, y_ - other.y_, z_ - other.z_);
+	}
+
+	Vector& Vector::operator-=(const Vector& other)
+	{
+		return *this = *this - other;
 	}
 
 	float Vector::operator*(const Vector& other) const
@@ -26,14 +45,29 @@ namespace phun
 		return Vector(x_*scalar,y_*scalar,z_*scalar);
 	}
 
+	Vector& Vector::operator*=(const float& scalar)
+	{
+		return *this = *this * scalar;
+	}
+
 	Vector Vector::operator/(const float& scalar) const
 	{
 		return Vector(x_/scalar,y_/scalar,z_/scalar);
 	}
 
+	Vector& Vector::operator/=(const float& scalar)
+	{
+		return *this = *this / scalar;
+	}
+
 	Vector Vector::operator^(const Vector& other) const
 	{
 		return Vector(y_ * other.z_ - z_ * other.y_, z_ * other.x_ - x_ * other.z_, x_ * other.y_ - y_ * other.x_);
+	}
+
+	Vector& Vector::operator^=(const Vector& other)
+	{
+		return *this = *this ^ other;
 	}
 
 	float Vector::Length() const
