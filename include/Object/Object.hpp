@@ -21,7 +21,7 @@ namespace phun
 		Object<T>& operator=(Object<T> other)
 		{
 			decreaseCounter_();
-			refCount = other.refCount;
+			refCount_ = other.refCount_;
 			increaseCounter_();
 			id_ = other.id_;
 			return *this;
@@ -35,7 +35,7 @@ namespace phun
 		Object() = delete;
 		Object(const Object& other)
 		{
-			refCount = other.refCount;
+			refCount_ = other.refCount_;
 			increaseCounter_();
 			id_ = other.id_;
 		}
@@ -48,30 +48,30 @@ namespace phun
 	private:
 		explicit Object(T value)
 		{
-			refCount = new size_t();
-			*refCount=0;
+			refCount_ = new size_t();
+			*refCount_=0;
 		}
 
 		void increaseCounter_()
 		{
-			++(*refCount);
+			++(*refCount_);
 		}
 
 		void decreaseCounter_()
 		{
-			--(*refCount);
-			if (*refCount == 0)
-				release();
+			--(*refCount_);
+			if (*refCount_ == 0)
+				release_();
 		}
 
-		void release()
+		void release_()
 		{
 			ObjectManager::instance().remove(*this);
-			delete refCount;
-			refCount = nullptr;
+			delete refCount_;
+			refCount_ = nullptr;
 		}
 
 	public:
-		size_t* refCount;
+		size_t* refCount_;
 	};
 }

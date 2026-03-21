@@ -11,7 +11,6 @@ namespace phun
 	public:
 		ObjectBase();
 	protected:
-		
 		size_t id_;
 	};
 }
