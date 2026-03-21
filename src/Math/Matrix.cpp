@@ -163,6 +163,21 @@ namespace phun
 		matrix.matrix_ = matrix.Inverse().matrix_;
 	}
 
+	void phun::Matrix::RotateX(float teto)
+	{
+		*this *= RotationX(teto);
+	}
+
+	void phun::Matrix::RotateY(float teto)
+	{
+		*this *= RotationY(teto);
+	}
+
+	void phun::Matrix::RotateZ(float teto)
+	{
+		*this *= RotationZ(teto);
+	}
+
 	Matrix phun::Matrix::RotationX(float teto)
 	{
 		return Matrix({
