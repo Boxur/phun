@@ -48,15 +48,15 @@ namespace phun
 	Matrix Matrix::operator*(const Matrix& other) const
 	{
 		return Matrix({
-			at_(0) * other.at_(0) + at_(1) * other.at_(3) + at_(2) * other.at_(6),
-			at_(0) * other.at_(1) + at_(1) * other.at_(4) + at_(2) * other.at_(7),
-			at_(0) * other.at_(2) + at_(1) * other.at_(5) + at_(2) * other.at_(8),
-			at_(3) * other.at_(0) + at_(4) * other.at_(3) + at_(5) * other.at_(6),
-			at_(3) * other.at_(1) + at_(4) * other.at_(4) + at_(5) * other.at_(7),
-			at_(3) * other.at_(2) + at_(4) * other.at_(5) + at_(5) * other.at_(8),
-			at_(6) * other.at_(0) + at_(7) * other.at_(3) + at_(8) * other.at_(6),
-			at_(6) * other.at_(1) + at_(7) * other.at_(4) + at_(8) * other.at_(7),
-			at_(6) * other.at_(2) + at_(7) * other.at_(5) + at_(8) * other.at_(8)
+			At_(0) * other.At_(0) + At_(1) * other.At_(3) + At_(2) * other.At_(6),
+			At_(0) * other.At_(1) + At_(1) * other.At_(4) + At_(2) * other.At_(7),
+			At_(0) * other.At_(2) + At_(1) * other.At_(5) + At_(2) * other.At_(8),
+			At_(3) * other.At_(0) + At_(4) * other.At_(3) + At_(5) * other.At_(6),
+			At_(3) * other.At_(1) + At_(4) * other.At_(4) + At_(5) * other.At_(7),
+			At_(3) * other.At_(2) + At_(4) * other.At_(5) + At_(5) * other.At_(8),
+			At_(6) * other.At_(0) + At_(7) * other.At_(3) + At_(8) * other.At_(6),
+			At_(6) * other.At_(1) + At_(7) * other.At_(4) + At_(8) * other.At_(7),
+			At_(6) * other.At_(2) + At_(7) * other.At_(5) + At_(8) * other.At_(8)
 			});
 	}
 
@@ -68,9 +68,9 @@ namespace phun
 	Vector Matrix::operator*(Vector& vector) const
 	{
 		return Vector(
-			vector.x() * at_(0) + vector.y() * at_(1) + vector.z() * at_(2),
-			vector.x() * at_(3) + vector.y() * at_(4) + vector.z() * at_(5),
-			vector.x() * at_(6) + vector.y() * at_(7) + vector.z() * at_(8)
+			vector.x() * At_(0) + vector.y() * At_(1) + vector.z() * At_(2),
+			vector.x() * At_(3) + vector.y() * At_(4) + vector.z() * At_(5),
+			vector.x() * At_(6) + vector.y() * At_(7) + vector.z() * At_(8)
 			);
 	}
 
@@ -90,80 +90,80 @@ namespace phun
 		return ret;
 	}
 
-	float Matrix::determinant() const
+	float Matrix::Determinant() const
 	{
-		return at_(0) * (at_(4) * at_(8) - at_(5) * at_(7))
-			- at_(1) * (at_(3) * at_(8) - at_(5) * at_(6))
-			+ at_(2) * (at_(3) * at_(7) - at_(4) * at_(6));
+		return At_(0) * (At_(4) * At_(8) - At_(5) * At_(7))
+			- At_(1) * (At_(3) * At_(8) - At_(5) * At_(6))
+			+ At_(2) * (At_(3) * At_(7) - At_(4) * At_(6));
 	}
 
-	float Matrix::det() const
+	float Matrix::Det() const
 	{
-		return determinant();
+		return Determinant();
 	}
 
-	float Matrix::determinant(const Matrix& matrix)
+	float Matrix::Determinant(const Matrix& matrix)
 	{
-		return matrix.determinant();
+		return matrix.Determinant();
 	}
 
-	float Matrix::det(const Matrix& matrix)
+	float Matrix::Det(const Matrix& matrix)
 	{
-		return matrix.determinant();
+		return matrix.Determinant();
 	}
 
-	Matrix phun::Matrix::transposition() const
+	Matrix phun::Matrix::Transposition() const
 	{
 		return Matrix({
-			at_(0), at_(3), at_(6),
-			at_(1), at_(4), at_(7),
-			at_(2), at_(5), at_(8)
+			At_(0), At_(3), At_(6),
+			At_(1), At_(4), At_(7),
+			At_(2), At_(5), At_(8)
 			});
 	}
 
-	void phun::Matrix::transpose()
+	void phun::Matrix::Transpose()
 	{
-		matrix_ = transposition().matrix_;
+		matrix_ = Transposition().matrix_;
 	}
 
-	Matrix phun::Matrix::transposition(const Matrix& matrix)
+	Matrix phun::Matrix::Transposition(const Matrix& matrix)
 	{
-		return matrix.transposition();
+		return matrix.Transposition();
 	}
 
-	void phun::Matrix::transpose(Matrix& matrix)
+	void phun::Matrix::Transpose(Matrix& matrix)
 	{
-		matrix.matrix_ = matrix.transposition().matrix_;
+		matrix.matrix_ = matrix.Transposition().matrix_;
 	}
 
-	Matrix Matrix::inverse() const
+	Matrix Matrix::Inverse() const
 	{
-		float d = determinant();
+		float d = Determinant();
 		if (d == 0)
 			return Matrix({});
 		return Matrix({
-			at_(4) * at_(8) - at_(5) * at_(7),at_(2) * at_(7) - at_(1) * at_(8) , at_(1) * at_(5) - at_(2) * at_(4),
-			at_(5) * at_(6) - at_(3) * at_(8), at_(0) * at_(8) - at_(2) * at_(6), at_(2) * at_(3) - at_(0) * at_(5),
-			at_(3) * at_(7) - at_(4) * at_(6), at_(1) * at_(6) - at_(0) * at_(7), at_(0) * at_(4) - at_(1) * at_(3)
+			At_(4) * At_(8) - At_(5) * At_(7),At_(2) * At_(7) - At_(1) * At_(8) , At_(1) * At_(5) - At_(2) * At_(4),
+			At_(5) * At_(6) - At_(3) * At_(8), At_(0) * At_(8) - At_(2) * At_(6), At_(2) * At_(3) - At_(0) * At_(5),
+			At_(3) * At_(7) - At_(4) * At_(6), At_(1) * At_(6) - At_(0) * At_(7), At_(0) * At_(4) - At_(1) * At_(3)
 			}) / d;
 	}
 
-	void phun::Matrix::invert()
+	void phun::Matrix::Invert()
 	{
-		matrix_ = inverse().matrix_;
+		matrix_ = Inverse().matrix_;
 	}
 
-	Matrix phun::Matrix::inverse(const Matrix& matrix)
+	Matrix phun::Matrix::Inverse(const Matrix& matrix)
 	{
-		return matrix.inverse();
+		return matrix.Inverse();
 	}
 
-	void phun::Matrix::invert(Matrix& matrix)
+	void phun::Matrix::Invert(Matrix& matrix)
 	{
-		matrix.matrix_ = matrix.inverse().matrix_;
+		matrix.matrix_ = matrix.Inverse().matrix_;
 	}
 
-	float phun::Matrix::at_(size_t index) const
+	float phun::Matrix::At_(size_t index) const
 	{
 		if (index >= 9)
 			index %= 9;

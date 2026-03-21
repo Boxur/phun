@@ -24,23 +24,24 @@ namespace phun
 		Matrix operator/(const float& scalar)	const;
 		Matrix& operator/=(const float& scalar);
 
-		float determinant() const;
-		float det() const;
-		static float determinant(const Matrix& matrix);
-		static float det(const Matrix& matrix);
+		float Determinant() const;
+		float Det() const;
+		static float Determinant(const Matrix& matrix);
+		static float Det(const Matrix& matrix);
 
-		Matrix transposition() const;
-		void transpose();
-		static Matrix transposition(const Matrix& matrix);
-		static void transpose(Matrix& matrix);
+		Matrix Transposition() const;
+		void Transpose();
+		static Matrix Transposition(const Matrix& matrix);
+		static void Transpose(Matrix& matrix);
 
-		Matrix inverse() const;
-		void invert();
-		static Matrix inverse(const Matrix& matrix);
-		static void invert(Matrix& matrix);
+		Matrix Inverse() const;
+		void Invert();
+		static Matrix Inverse(const Matrix& matrix);
+		static void Invert(Matrix& matrix);
+
 
 	private:
-		float at_(size_t index) const;
+		float At_(size_t index) const;
 	private:
 		std::array<float, 9> matrix_;
 	};
