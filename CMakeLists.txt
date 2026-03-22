@@ -5,16 +5,16 @@ set(CMAKE_CXX_STANDARD			 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS		OFF)
 
-file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/Object/*.cpp")
+file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Object/src/*.cpp")
 
 add_library(object STATIC "${OBJECT_LIB}")
-target_include_directories(object PRIVATE "include/Object")
+target_include_directories(object PRIVATE "Object/include")
 
-file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/src/Math/*.cpp")
+file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Math/src/*.cpp")
 
 add_library(math STATIC "${MATH_LIB}")
-target_include_directories(math PRIVATE "include/Math")
+target_include_directories(math PRIVATE "Math/include")
 
-add_executable(exec src/main.cpp)
-target_include_directories(exec PRIVATE "include/Object" "include/Math")
+add_executable(exec main/main.cpp)
+target_include_directories(exec PRIVATE "Object/include" "Math/include")
 target_link_libraries(exec object math)
