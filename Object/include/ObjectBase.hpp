@@ -6,7 +6,6 @@ namespace phun
 {
 	class ObjectBase
 	{
-	public:
 		friend class ObjectManager;
 	public:
 		ObjectBase();
