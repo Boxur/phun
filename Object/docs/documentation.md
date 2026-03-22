@@ -225,7 +225,6 @@ Unregisters the object from being automatically managed by the class.
 std::any& GetValue(ObjectBase& obj)
 ```
 
-Gets the value stored for the object.
 Gets the value stored for the object in order for it to be accessed by the user.
 
 **Arguments**:
