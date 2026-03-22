@@ -12,7 +12,7 @@ namespace phun
 	public:
 		static ObjectManager& instance();
 
-		ObjectBase& RegisterObject(std::unique_ptr<ObjectBase> obj,std::any value);
+		void RegisterObject(ObjectBase* obj,std::any value);
 
 		void remove(ObjectBase& obj);
 
@@ -26,7 +26,7 @@ namespace phun
 
 		std::vector<size_t>					objectIndexes_;
 		std::vector<size_t>							  ids_;
-		std::vector<std::unique_ptr<ObjectBase>>  objects_;
+		std::vector<ObjectBase*>  objects_;
 		std::vector<std::any>					   values_;
 	};
 }

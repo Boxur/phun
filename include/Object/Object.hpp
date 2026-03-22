@@ -11,14 +11,24 @@ namespace phun
 	class Object : public ObjectBase
 	{
 	public:
-		static Object<T>& Create(T value)
+		/*static Object<T>& Create(T value)
 		{
-			auto ptr = std::unique_ptr<Object<T>>(new Object<T>(std::move(value)));
+
+			std::unique_ptr<Object<T>> ptr;
+			ptr->refCount_ = new size_t();
+			*ptr->refCount_ = 0;
 			auto& baseRef = ObjectManager::instance().RegisterObject(std::move(ptr),std::move(value));
 			return static_cast<Object<T>&>(baseRef);
+		}*/
+
+		Object(T value)
+		{
+			refCount_ = new size_t();
+			*refCount_ = 1;
+			ObjectManager::instance().RegisterObject(std::move(this), std::move(value));
 		}
 
-		Object<T>& operator=(Object<T> other)
+		Object<T>& operator=(const Object<T>& other)
 		{
 			decreaseCounter_();
 			refCount_ = other.refCount_;
@@ -27,7 +37,7 @@ namespace phun
 			return *this;
 		}
 
-		T& value()
+		T& Value()
 		{
 			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
 		}
@@ -56,12 +66,6 @@ namespace phun
 		}
 
 	private:
-		explicit Object(T value)
-		{
-			refCount_ = new size_t();
-			*refCount_=0;
-		}
-
 		void increaseCounter_()
 		{
 			++(*refCount_);
@@ -81,7 +85,7 @@ namespace phun
 			refCount_ = nullptr;
 		}
 
-	public:
+	protected:
 		size_t* refCount_;
 	};
 }

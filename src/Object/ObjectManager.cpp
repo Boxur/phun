@@ -9,7 +9,7 @@ namespace phun
 		return inst;
 	}
 
-	ObjectBase& ObjectManager::RegisterObject(std::unique_ptr<ObjectBase> obj, std::any value)
+	void ObjectManager::RegisterObject(ObjectBase* obj, std::any value)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 		if (objects_.size() >= ids_.size())
@@ -21,7 +21,6 @@ namespace phun
 		objects_.push_back(std::move(obj));
 		objects_[objects_.size()-1]->id_ = ids_[objects_.size() - 1];
 		values_.push_back(value);
-		return *objects_.back();
 	}
 
 	std::any& ObjectManager::getValue(ObjectBase& obj)
