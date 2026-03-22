@@ -11,25 +11,34 @@ namespace phun
 	class Object : public ObjectBase
 	{
 	public:
+		Object() = delete;
+
 		Object(T value)
 		{
 			refCount_ = new size_t();
 			*refCount_ = 1;
 			ObjectManager::instance().RegisterObject(std::move(this), std::move(value));
 		}
+		
+		Object(const Object& other)
+		{
+			refCount_ = other.refCount_;
+			IncreaseCounter_();
+			id_ = other.id_;
+		}
+
+		~Object()
+		{
+			DecreaseCounter_();
+		}
 
 		Object<T>& operator=(const Object<T>& other)
 		{
-			decreaseCounter_();
+			DecreaseCounter_();
 			refCount_ = other.refCount_;
-			increaseCounter_();
+			IncreaseCounter_();
 			id_ = other.id_;
 			return *this;
-		}
-
-		T& Value()
-		{
-			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
 		}
 
 		T& operator*()
@@ -42,33 +51,25 @@ namespace phun
 			return &std::any_cast<T&>(ObjectManager::instance().getValue(*this));
 		}
 
-		Object() = delete;
-		Object(const Object& other)
+		T& Value()
 		{
-			refCount_ = other.refCount_;
-			increaseCounter_();
-			id_ = other.id_;
-		}
-
-		~Object()
-		{
-			decreaseCounter_();
+			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
 		}
 
 	private:
-		void increaseCounter_()
+		void IncreaseCounter_()
 		{
 			++(*refCount_);
 		}
 
-		void decreaseCounter_()
+		void DecreaseCounter_()
 		{
 			--(*refCount_);
 			if (*refCount_ == 0)
-				release_();
+				Release_();
 		}
 
-		void release_()
+		void Release_()
 		{
 			ObjectManager::instance().remove(*this);
 			delete refCount_;
