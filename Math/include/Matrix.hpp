@@ -8,50 +8,50 @@ namespace phun
 	{
 	public:
 		Matrix();
-		Matrix(std::array<float, 9> matrix);
+		Matrix(const std::array<float, 9>& matrix);
 		Matrix(const Matrix& other);
 
-		float& operator()(size_t row, size_t col);
-		float operator()(size_t row, size_t col) const;
+		float& operator()(const size_t& row, const size_t& col);
+		float operator()(const size_t& row, const size_t& col) const;
 		Matrix& operator=(const Matrix& other);
 		Matrix operator+(const Matrix& other)	const;
 		Matrix& operator+=(const Matrix& other);
 		Matrix operator-(const Matrix& other)	const;
 		Matrix& operator-=(const Matrix& other);
 		Matrix operator*(const Matrix& other)	const;
-		Matrix& operator*=(const Matrix& other);
-		Vector operator*(const Vector& vector)		const;
+		Vector operator*(const Vector& vector)	const;
 		Matrix operator*(const float& scalar)	const;
+		Matrix& operator*=(const Matrix& other);
 		Matrix& operator*=(const float& scalar);
 		Matrix operator/(const float& scalar)	const;
 		Matrix& operator/=(const float& scalar);
 
 		float Determinant() const;
-		float Det() const;
 		static float Determinant(const Matrix& matrix);
+		float Det() const;
 		static float Det(const Matrix& matrix);
 
 		Matrix Transposition() const;
-		void Transpose();
 		static Matrix Transposition(const Matrix& matrix);
+		void Transpose();
 		static void Transpose(Matrix& matrix);
 
 		Matrix Inverse() const;
-		void Invert();
 		static Matrix Inverse(const Matrix& matrix);
+		void Invert();
 		static void Invert(Matrix& matrix);
 
 		//Teto reference because it sounds similar to "theta" as an angle
-		void RotateX(float teto);
-		void RotateY(float teto);
-		void RotateZ(float teto);
-		static Matrix RotationX(float teto);
-		static Matrix RotationY(float teto);
-		static Matrix RotationZ(float teto);
+		void RotateX(const float& teto);
+		void RotateY(const float& teto);
+		void RotateZ(const float& teto);
+		static Matrix RotationX(const float& teto);
+		static Matrix RotationY(const float& teto);
+		static Matrix RotationZ(const float& teto);
 
 	private:
-		float& At_(size_t index);
-		float At_(size_t index) const;
+		float& At_(const size_t& index);
+		float At_(const size_t& index) const;
 	private:
 		std::array<float, 9> matrix_;
 	};

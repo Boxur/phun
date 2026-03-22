@@ -2,11 +2,11 @@
 namespace phun
 {
 	Matrix::Matrix() : matrix_{} {}
-	Matrix::Matrix(std::array<float, 9> matrix) : matrix_(matrix) {}
+	Matrix::Matrix(const std::array<float, 9>& matrix) : matrix_(matrix) {}
 
 	Matrix::Matrix(const Matrix& other) : matrix_(other.matrix_) {}
 
-	float& Matrix::operator()(size_t row, size_t col)
+	float& Matrix::operator()(const size_t& row, const size_t& col)
 	{
 		size_t index = 3 * row + col;
 		if (index >= 9)
@@ -14,7 +14,7 @@ namespace phun
 		return matrix_[index];
 	}
 
-	float Matrix::operator()(size_t row, size_t col) const
+	float Matrix::operator()(const size_t& row, const size_t& col) const
 	{
 		size_t index = 3 * row + col;
 		if (index >= 9)
@@ -75,11 +75,6 @@ namespace phun
 			});
 	}
 
-	Matrix& Matrix::operator*=(const Matrix& other)
-	{
-		return *this = *this * other;
-	}
-
 	Vector Matrix::operator*(const Vector& vector) const
 	{
 		return Vector(
@@ -96,6 +91,11 @@ namespace phun
 		for (int i = 0; i < 9; i++)
 			ret.matrix_[i] *= scalar;
 		return ret;
+	}
+
+	Matrix& Matrix::operator*=(const Matrix& other)
+	{
+		return *this = *this * other;
 	}
 
 	Matrix& Matrix::operator*=(const float& scalar)
@@ -128,14 +128,14 @@ namespace phun
 			+ At_(2) * (At_(3) * At_(7) - At_(4) * At_(6));
 	}
 
-	float Matrix::Det() const
-	{
-		return Determinant();
-	}
-
 	float Matrix::Determinant(const Matrix& matrix)
 	{
 		return matrix.Determinant();
+	}
+
+	float Matrix::Det() const
+	{
+		return Determinant();
 	}
 
 	float Matrix::Det(const Matrix& matrix)
@@ -152,14 +152,14 @@ namespace phun
 			});
 	}
 
-	void phun::Matrix::Transpose()
-	{
-		matrix_ = Transposition().matrix_;
-	}
-
 	Matrix phun::Matrix::Transposition(const Matrix& matrix)
 	{
 		return matrix.Transposition();
+	}
+
+	void phun::Matrix::Transpose()
+	{
+		matrix_ = Transposition().matrix_;
 	}
 
 	void phun::Matrix::Transpose(Matrix& matrix)
@@ -179,14 +179,14 @@ namespace phun
 			}) / d;
 	}
 
-	void phun::Matrix::Invert()
-	{
-		matrix_ = Inverse().matrix_;
-	}
-
 	Matrix phun::Matrix::Inverse(const Matrix& matrix)
 	{
 		return matrix.Inverse();
+	}
+
+	void phun::Matrix::Invert()
+	{
+		matrix_ = Inverse().matrix_;
 	}
 
 	void phun::Matrix::Invert(Matrix& matrix)
@@ -194,22 +194,22 @@ namespace phun
 		matrix.matrix_ = matrix.Inverse().matrix_;
 	}
 
-	void phun::Matrix::RotateX(float teto)
+	void phun::Matrix::RotateX(const float& teto)
 	{
 		*this *= RotationX(teto);
 	}
 
-	void phun::Matrix::RotateY(float teto)
+	void phun::Matrix::RotateY(const float& teto)
 	{
 		*this *= RotationY(teto);
 	}
 
-	void phun::Matrix::RotateZ(float teto)
+	void phun::Matrix::RotateZ(const float& teto)
 	{
 		*this *= RotationZ(teto);
 	}
 
-	Matrix phun::Matrix::RotationX(float teto)
+	Matrix phun::Matrix::RotationX(const float& teto)
 	{
 		return Matrix({
 			1, 0, 0,
@@ -218,7 +218,7 @@ namespace phun
 			});
 	}
 
-	Matrix phun::Matrix::RotationY(float teto)
+	Matrix phun::Matrix::RotationY(const float& teto)
 	{
 		return Matrix({
 			cosf(teto), 0, sinf(teto),
@@ -227,7 +227,7 @@ namespace phun
 			});
 	}
 
-	Matrix phun::Matrix::RotationZ(float teto)
+	Matrix phun::Matrix::RotationZ(const float& teto)
 	{
 		return Matrix({
 			cosf(teto), -sinf(teto), 0,
@@ -236,17 +236,17 @@ namespace phun
 			});
 	}
 
-	float& phun::Matrix::At_(size_t index)
+	float& phun::Matrix::At_(const size_t& index)
 	{
 		if (index >= 9)
-			index %= 9;
+			return matrix_[index%9];
 		return matrix_[index];
 	}
 
-	float phun::Matrix::At_(size_t index) const
+	float phun::Matrix::At_(const size_t& index) const
 	{
 		if (index >= 9)
-			index %= 9;
+			return matrix_[index%9];
 		return matrix_[index];
 	}
 
