@@ -11,16 +11,6 @@ namespace phun
 	class Object : public ObjectBase
 	{
 	public:
-		/*static Object<T>& Create(T value)
-		{
-
-			std::unique_ptr<Object<T>> ptr;
-			ptr->refCount_ = new size_t();
-			*ptr->refCount_ = 0;
-			auto& baseRef = ObjectManager::instance().RegisterObject(std::move(ptr),std::move(value));
-			return static_cast<Object<T>&>(baseRef);
-		}*/
-
 		Object(T value)
 		{
 			refCount_ = new size_t();

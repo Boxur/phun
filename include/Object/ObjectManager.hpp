@@ -1,5 +1,6 @@
 #pragma once
 #include "ObjectBase.hpp"
+#include "Object.hpp"
 #include <mutex>
 #include <vector>
 #include <memory>
@@ -9,16 +10,18 @@ namespace phun
 {
 	class ObjectManager
 	{
+		template<class T>
+		friend class Object;
 	public:
 		static ObjectManager& instance();
-
+	private:
 		void RegisterObject(ObjectBase* obj,std::any value);
 
 		void remove(ObjectBase& obj);
 
 		std::any& getValue(ObjectBase& obj);
 
-	private:
+
 		ObjectManager() {}
 		ObjectManager(const ObjectManager&) = delete;
 		ObjectManager& operator=(const ObjectManager&) = delete;
