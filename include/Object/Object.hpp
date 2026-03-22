@@ -43,17 +43,17 @@ namespace phun
 
 		T& operator*()
 		{
-			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+			return std::any_cast<T&>(ObjectManager::instance().GetValue(*this));
 		}
 
 		T* operator->()
 		{
-			return &std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+			return &std::any_cast<T&>(ObjectManager::instance().GetValue(*this));
 		}
 
 		T& Value()
 		{
-			return std::any_cast<T&>(ObjectManager::instance().getValue(*this));
+			return std::any_cast<T&>(ObjectManager::instance().GetValue(*this));
 		}
 
 	private:
@@ -71,7 +71,7 @@ namespace phun
 
 		void Release_()
 		{
-			ObjectManager::instance().remove(*this);
+			ObjectManager::instance().UnregisterObject(*this);
 			delete refCount_;
 			refCount_ = nullptr;
 		}

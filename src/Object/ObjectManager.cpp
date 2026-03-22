@@ -23,12 +23,12 @@ namespace phun
 		values_.push_back(value);
 	}
 
-	std::any& ObjectManager::getValue(ObjectBase& obj)
+	std::any& ObjectManager::GetValue(ObjectBase& obj)
 	{
 		return values_[objectIndexes_[obj.id_]];
 	}
 
-	void ObjectManager::remove(ObjectBase& obj)
+	void ObjectManager::UnregisterObject(ObjectBase& obj)
 	{
 		std::lock_guard<std::mutex> lock(mutex_);
 		if (objectIndexes_[obj.id_] != objects_.size() - 1)
