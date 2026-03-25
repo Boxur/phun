@@ -8,13 +8,13 @@ set(CMAKE_CXX_STANDARD			 17)
 set(CMAKE_CXX_STANDARD_REQUIRED YES)
 set(CMAKE_CXX_EXTENSIONS		OFF)
 
-FetchContent_Declare(SFML
-    GIT_REPOSITORY https://github.com/SFML/SFML.git
-    GIT_TAG 3.0.2
-    GIT_SHALLOW ON
-    EXCLUDE_FROM_ALL
-    SYSTEM)
-FetchContent_MakeAvailable(SFML)
+FetchContent_Declare(
+	raylib
+    GIT_REPOSITORY "https://github.com/raysan5/raylib.git"
+    GIT_TAG "master"
+    GIT_PROGRESS TRUE	
+)
+FetchContent_MakeAvailable(raylib)
 
 file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Object/src/*.cpp")
 
@@ -28,4 +28,4 @@ target_include_directories(math PRIVATE "Math/include")
 
 add_executable(exec main/main.cpp)
 target_include_directories(exec PRIVATE "Object/include" "Math/include")
-target_link_libraries(exec object math SFML::Graphics)
+target_link_libraries(exec object math raylib)
