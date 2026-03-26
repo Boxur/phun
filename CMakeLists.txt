@@ -16,15 +16,20 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Object/src/*.cpp")
+function(makeLib libDir)
 
-add_library(object STATIC "${OBJECT_LIB}")
-target_include_directories(object PRIVATE "Object/include")
+file(GLOB_RECURSE LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/src/*.cpp")
 
-file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Math/src/*.cpp")
+if(LIB)
+    add_library(object STATIC "${LIB}")
+    target_include_directories(object PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/include")
+endif()
 
-add_library(math STATIC "${MATH_LIB}")
-target_include_directories(math PRIVATE "Math/include")
+endfunction()
+
+makeLib(Object)
+
+makeLib(Math)
 
 file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR})
 
