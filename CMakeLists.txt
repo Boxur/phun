@@ -26,6 +26,8 @@ file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Math/s
 add_library(math STATIC "${MATH_LIB}")
 target_include_directories(math PRIVATE "Math/include")
 
+file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR})
+
 add_executable(exec main/main.cpp)
 target_include_directories(exec PRIVATE "Object/include" "Math/include")
 target_link_libraries(exec object math raylib)
