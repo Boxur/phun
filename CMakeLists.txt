@@ -16,16 +16,29 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-file(GLOB_RECURSE OBJECT_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Object/src/*.cpp")
+function(addLib executable libDir)
 
-add_library(object STATIC "${OBJECT_LIB}")
-target_include_directories(object PRIVATE "Object/include")
+file(GLOB_RECURSE LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/src/*.cpp")
 
-file(GLOB_RECURSE MATH_LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/Math/src/*.cpp")
+if(LIB)
+    add_library("${libDir}" STATIC "${LIB}")
+    target_include_directories("${libDir}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/include")
+    
+    target_link_libraries("${executable}" "${libDir}")
+endif()
 
-add_library(math STATIC "${MATH_LIB}")
-target_include_directories(math PRIVATE "Math/include")
+target_include_directories("${executable}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/include")
+
+endfunction()
 
 add_executable(exec main/main.cpp)
-target_include_directories(exec PRIVATE "Object/include" "Math/include")
-target_link_libraries(exec object math raylib)
+
+addLib(exec Object)
+
+addLib(exec Math)
+
+file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR})
+
+target_link_libraries(exec raylib)
+
+
