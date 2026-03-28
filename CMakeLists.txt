@@ -16,26 +16,11 @@ FetchContent_Declare(
 )
 FetchContent_MakeAvailable(raylib)
 
-function(addLib executable libDir)
-
-file(GLOB_RECURSE LIB CONFIGURE_DEPENDS "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/src/*.cpp")
-
-if(LIB)
-    add_library("${libDir}" STATIC "${LIB}")
-    target_include_directories("${libDir}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/include")
-    
-    target_link_libraries("${executable}" "${libDir}")
-endif()
-
-target_include_directories("${executable}" PRIVATE "${CMAKE_CURRENT_SOURCE_DIR}/${libDir}/include")
-
-endfunction()
-
 add_executable(exec main/main.cpp)
 
-addLib(exec Object)
+add_subdirectory(Object)
 
-addLib(exec Math)
+target_link_libraries(exec Object)
 
 file(COPY Assets DESTINATION ${CMAKE_BINARY_DIR})
 

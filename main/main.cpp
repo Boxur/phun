@@ -1,13 +1,25 @@
-#include "Object.hpp"
-#include "Matrix.hpp"
 #include "Vector.hpp"
+#include "Object.hpp"
+#include "ObjectManager.hpp"
 #include <iostream>
-
 #include "raylib.h"
 #include <cmath>
 
+void drawObject(phun::ID<phun::Object>& obj)
+{
+    /*if (!(*obj).has_value())
+        return;*/
+    const phun::Object object = **obj;
+    Mesh temp = { 0 };
+    temp.vertexCount = object.GetVertexCount();
+    temp.vertices = (float*)object.GetVertices();
+    temp.indices = (unsigned short*)object.GetIndices();
+}
+
 int main()
 {
+    auto triangle = phun::ObjectManager<phun::Object>::instance().CreateObject();
+
     InitWindow(800, 450, "phun");
     SetTargetFPS(60);
 
