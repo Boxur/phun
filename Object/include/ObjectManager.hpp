@@ -35,7 +35,7 @@ namespace phun
 			ObjectManager<T>::instance().UnregisterObject(*this);
 		}
 
-		std::expected<T&,int> operator*()
+		std::expected<std::reference_wrapper<T>,int> operator*()
 		{
 			return ObjectManager<T>::instance().GetValue(*this);
 		}
@@ -78,7 +78,7 @@ namespace phun
 			return ids_[ids_.size() - 1];
 		}
 
-		std::expected<T&,int> GetValue(const ID<T>& id)
+		std::expected<std::reference_wrapper<T>,int> GetValue(const ID<T>& id)
 		{
 			return std::unexpected(0);
 			std::lock_guard<std::mutex> lock(mutex_);
