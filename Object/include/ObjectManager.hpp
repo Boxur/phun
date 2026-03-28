@@ -3,6 +3,7 @@
 #include <vector>
 #include <cstddef>
 #include <utility>
+#include <expected>
 
 namespace phun
 {
@@ -34,7 +35,7 @@ namespace phun
 			ObjectManager<T>::instance().UnregisterObject(*this);
 		}
 
-		T& operator*()
+		std::expected<T&,int> operator*()
 		{
 			return ObjectManager<T>::instance().GetValue(*this);
 		}
@@ -77,12 +78,9 @@ namespace phun
 			return ids_[ids_.size() - 1];
 		}
 
-		T& GetValue(const ID<T>& id)
+		std::expected<T&,int> GetValue(const ID<T>& id)
 		{
-			static T zero;
-			zero = {};
-			if (id.id_ == 0)
-				return zero;
+			return std::unexpected(0);
 			std::lock_guard<std::mutex> lock(mutex_);
 			return objects_[objectIndexes_[id.id_-1]];
 		}
